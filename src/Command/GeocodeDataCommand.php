@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Service\MapManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,8 +27,11 @@ class GeocodeDataCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('limit', null, InputOption::VALUE_OPTIONAL, 'Max geocode creations', 200)
+            ->addOption('limit',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Max geocode creations',
+                100)
         ;
     }
 
@@ -38,7 +40,7 @@ class GeocodeDataCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $limit = (int)$input->getOption('limit');
         $io->title("Geocoding up to $limit associations");
-
+        $io->progressStart();
         $this->mapManager->migrateCoordToDatabase($limit);
         $io->success('Geocoding batch completed.');
 

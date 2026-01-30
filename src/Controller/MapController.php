@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use AllowDynamicProperties;
+use App\Repository\AssociationRepository;
 use App\Service\AssociationManager;
 use App\Service\MapManager;
 use App\Service\NomenclatureManager;
@@ -15,13 +16,16 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/map', name: 'map_')]
 final class MapController extends AbstractController
 {
-    public function __construct(NomenclatureManager $nomenclatureManager,
-                                AssociationManager  $associationManager,
-                                MapManager          $mapManager)
+    public function __construct(NomenclatureManager   $nomenclatureManager,
+                                AssociationManager    $associationManager,
+                                MapManager            $mapManager,
+                                AssociationRepository $associationRepository
+    )
     {
         $this->nomenclatureManager = $nomenclatureManager;
         $this->associationsManager = $associationManager;
         $this->mapManager = $mapManager;
+        $this->associationRepository = $associationRepository;
     }
 
     #[Route('/', name: 'user', methods: ['GET', 'POST'])]
@@ -47,10 +51,28 @@ final class MapController extends AbstractController
         ]);
     }
 
-    #[Route('/department/{}', name: 'department')]
-    public function fromDepartment(): Response
+//    #[Route('/department/{}', name: 'department')]
+
+
+    #[Route('/city/{city}', name: 'city')]
+    public function city(string $city): Response
     {
-        $this->associationsManager->migrateToDatabase(33);
-        dd();
+        if ($city === 'bordeaux') {
+            $bordeauxRadius = 8000;
+            $associations = $this->associationRepository->findAll();
+            $points = $this->mapManager->findByCircle($associations, [44.841225, -0.5800364], $bordeauxRadius);
+        dd($points);
+        }
+dd();
+$this->associationRepository->findEmptyCoordinates(50);
+        dd($this->associationRepository->findEmptyCoordinates(50));
     }
+
+    #[Route('/test', name: 'test')]
+    public function test(): Response
+    {
+        $associations = $this->associationRepository->findAll();
+        dd($this->associationRepository->findEmptyCoordinates(50));
+    }
+
 }

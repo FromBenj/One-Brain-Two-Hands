@@ -129,28 +129,29 @@ class AssociationManager
         }
     }
 
-    public function migrateToDatabase(int $department): void
+    public function migrateToDatabase(int $department, int $limit): void
     {
         $generator = $this->getCleanData($department);
         $batchSize = 200;
         $i = 0;
         foreach ($generator as $assoData) {
-            $coordinates = $this->mapManager->getCoordFromAddress($assoData['address']);
-            if (!$coordinates) {
-                continue;
-            }
             $association = new Association();
             $association->setName($assoData['name']);
             $association->setActivity($assoData['activity']);
             $association->setSocialId($assoData['socialId']);
             $association->setAddress($assoData['address']);
             $association->setWebsite($assoData['website']);
+            $association->setLatitude(100);  // impossible value
+            $association->setLongitude(100);  // Impossible value
             $this->em->persist($association);
             $i++;
             if (($i % $batchSize) === 0) {
                 $this->em->flush();
                 $this->em->clear();
                 gc_collect_cycles();
+            }
+            if ($i === $limit) {
+                break;
             }
         }
         $this->em->flush();

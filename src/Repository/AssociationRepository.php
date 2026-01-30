@@ -19,8 +19,10 @@ class AssociationRepository extends ServiceEntityRepository
     public function findEmptyCoordinates($limit): array
     {
         return $this->createQueryBuilder('a')
-            ->where('a.coordinates = :empty')
-            ->setParameter('empty',  json_encode([]))
+            ->where('a.latitude = :lat')
+            ->setParameter('lat', 100)
+            ->andWhere('a.longitude = :long')
+            ->setParameter('long', 100)
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();

@@ -22,7 +22,8 @@ class AssociationDataCommand extends Command
 
     public function __construct(
         private readonly AssociationManager $associationManager
-    ) {
+    )
+    {
         parent::__construct();
     }
 
@@ -33,6 +34,13 @@ class AssociationDataCommand extends Command
             InputArgument::REQUIRED,
             'Department number'
         );
+        $this->addOption(
+            'limit',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Max association creations',
+            400);
+
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -41,10 +49,11 @@ class AssociationDataCommand extends Command
         set_time_limit(0);
 
         $io = new SymfonyStyle($input, $output);
-        $department = (int) $input->getArgument('department');
-        $io->title("Importing associations for department $department ...");
+        $department = (int)$input->getArgument('department');
+        $limit = (int)$input->getOption('limit');
+        $io->title("Importing up to $limit associations for department $department ...");
         $io->progressStart();
-        $this->associationManager->migrateToDatabase($department);
+        $this->associationManager->migrateToDatabase($department, $limit);
         $io->success('Import completed successfully.');
 
         return Command::SUCCESS;

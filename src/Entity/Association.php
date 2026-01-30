@@ -29,8 +29,11 @@ class Association
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $website = null;
 
-    #[ORM\Column(type: 'json')]
-    private array $coordinates = [];
+    #[ORM\Column]
+    private ?float $latitude = null;
+
+    #[ORM\Column]
+    private ?float $longitude = null;
 
     public function getId(): ?int
     {
@@ -97,15 +100,32 @@ class Association
         return $this;
     }
 
-    public function getCoordinates(): array
+    public function getLatitude(): ?float
     {
-        return $this->coordinates;
+        return $this->latitude;
     }
 
-    public function setCoordinates(array $coordinates): static
+    public function setLatitude(float $latitude): static
     {
-        $this->coordinates = $coordinates;
+        $this->latitude = $latitude;
 
         return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(float $longitude): static
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getCoordinates(): array
+    {
+        return [$this->latitude, $this->longitude];
     }
 }
