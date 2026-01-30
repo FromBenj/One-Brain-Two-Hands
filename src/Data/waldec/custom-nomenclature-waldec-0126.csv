@@ -1,8 +1,5 @@
 objet_social_parent_id,objet_social_id,objet_social_libelle
-9000,9035,foyers ruraux
 30000,30000,"AIDE À L'EMPLOI, DÉVELOPPEMENT LOCAL, PROMOTION DE SOLIDARITÉS ÉCONOMIQUES, VIE LOCALE"
-30000,30005,"comité, défense d'un emploi"
-30000,30010,"entreprises d'insertion, associations intermédiaires, régies de quartier"
 14000,14050,associations féminines pour l'entraide et la solidarité (hors défense de droits fondamentaux)
 14000,14070,associations de personnes en situation de handicap pour l'entraide et la solidarité (hors défense de droits fondamentaux)
 20000,20015,associations caritatives à but multiple
@@ -11,13 +8,8 @@ objet_social_parent_id,objet_social_id,objet_social_libelle
 3000,3015,défense des libertés publiques et des droits de l'Homme
 3000,3025,défense de droits de personnes homosexuelles
 3000,3035,association pour la défense de droits de minorités
-15000,15105,maisons familiales rurales
-24000,24010,ressources naturelles
 24000,24030,préservation de la flore sauvage
-24000,24045,défense et amélioration du cadre de vie
 5000,5000,INFORMATION COMMUNICATION
-19000,19004,aide et conseils aux familles
-19000,19005,"associations familiales, services sociaux pour les familles"
 19000,19016,aide à l'insertion des jeunes
 19000,19035,aide aux victimes de violences faites aux enfants
 19000,19047,foyers socio-éducatifs
@@ -27,28 +19,20 @@ objet_social_parent_id,objet_social_id,objet_social_libelle
 37000,36520,"sauvetage, secourisme, protection civile"
 37000,36530,"prévention, formation, cours de secourisme"
 37000,36545,sécurité et sauvetage en montagne
-11000,11018,handisport
 30000,30050,promotion d'initiatives de développement durable
-20000,20010,"secours en nature, distribution de nourriture et de vêtements"
 20000,20020,associations caritatives intervenant au plan international
-20000,20025,développement du bénévolat
 3000,3012,défense des droits des enfants
 3000,3020,"défense des droits des femmes, condition féminine"
 3000,3030,défense des droits des  personnes en situation de handicap
 3000,3045,défense de droits de personnes rapatriées
 3000,3040,lutte contre les discriminations
 15000,15000,ÉDUCATION  FORMATION
-24000,24000,"ENVIRONNEMENT,  CADRE DE VIE"
-24000,24005,"pollutions, assainissement"
 24000,24050,actions de sensibilisation et d'éducation à l'environnement et au développement durable
 19000,19000,INTERVENTIONS SOCIALES
 19000,19010,"centres sociaux, foyers de jeunes travailleurs, centres d'études et d'action sociale"
 19000,19045,lutte contre diverses formes de violence
 19000,19055,"soutien aux détenus, reclassement des détenus"
-4000,4020,"contrôle judiciaire, associations de personnels de justice"
-4000,4025,"accès aux droits dans les tribunaux, assistance juridique"
 4000,4030,défense des droits des victimes
-4000,4035,"maisons du droit, accès au droit"
 33000,32525,réhabilitation et construction de logements
 17000,17000,SANTÉ
 17000,17115,"dépistage, prévention du sida"
@@ -57,41 +41,23 @@ objet_social_parent_id,objet_social_id,objet_social_libelle
 37000,36540,sauvetage en mer
 18000,18010,établissements et services pour adolescents en difficulté
 18000,18030,"prévention et lutte contre l'alcoolisme, le tabagisme, la toxicomanie"
-18000,18040,aide aux accidentés du travail
-18000,18045,aide aux victimes de maladies professionnelles
 18000,18050,aide sociale aux personnes en situation de handicap
-21000,21010,aide à domicile
-9000,9010,loisirs pour personnes en situation de handicap
-9000,9025,mouvements éducatifs de jeunesse et d'éducation populaire
 1000,1000,ACTIVITÉS POLITIQUES
-1000,1015,action politique locale
-1000,1025,activités citoyennes européennes
 14000,14035,groupements d'entraide et de solidarité
-14000,14040,"amicale de personnes originaires d'un même pays (hors défense des droits des étrangers), d'une même région du monde"
-14000,14060,associations de personnes homosexuelles pour l'entraide et la solidarité (hors défense de droits fondamentaux)
 20000,20000,"ASSOCIATIONS CARITATIVES, HUMANITAIRES, AIDE AU DÉVELOPPEMENT, DÉVELOPPEMENT DU BÉNÉVOLAT"
-20000,20005,secours financiers et autres services aux personnes en difficulté
 3000,3050,"défense de droits de personnes étrangères ou immigrées, de personnes réfugiées"
-15000,15030,"œuvres sociales en faveur des élèves, œuvres en faveur des pupilles de la nation"
-24000,24015,espaces naturels
 24000,24020,protection de sites naturels
 24000,24025,préservation de la faune sauvage
-24000,24035,"comités de défense, comités de sauvegarde"
 24000,24040,mouvements écologiques
 19000,19014,lutte contre l'illettrisme
 19000,19025,aide aux réfugiés et aux immigrés (hors défense de droits fondamentaux)
 19000,19030,"aide aux victimes de calamités naturelles, de catastrophes naturelles"
 19000,19032,aide aux victimes de violences conjugales
-19000,19040,"aide aux personnes en danger, solitude, désespoir, soutien psychologique et moral"
-19000,19050,réinsertion des délinquants
 32000,32000,LOGEMENT
-23000,23001,usagers de services publics
 17000,17055,"accompagnement, aide aux malades"
 17000,17065,"don de sang, don d'organe"
 17000,17095,"accueil, information pour contraception et avortement"
 17000,17130,"association de personnes malades, ou anciens malades"
 18000,18000,SERVICES ET ÉTABLISSEMENTS MÉDICO-SOCIAUX
 18000,18005,accueil et protection de la petite enfance
-18000,18015,"établissements et services pour enfants handicapés, établissements et services pour adultes handicapés, y compris les CAT (centres d'aide par le travail)."
 18000,18025,"établissements et services pour adultes en difficulté, CHRS (centres d'hébergement et de réadaptation sociale)"
-21000,21000,"SERVICES FAMILIAUX, SERVICES AUX PERSONNES ÂGÉES"

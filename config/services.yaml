@@ -25,3 +25,7 @@ services:
     App\Service\NomenclatureManager:
         arguments:
             $projectDir: '%kernel.project_dir%'
+
+    App\Service\AssociationManager:
+        arguments:
+            $projectDir: '%kernel.project_dir%'

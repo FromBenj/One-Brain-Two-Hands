@@ -26,7 +26,7 @@ class NomenclatureManager
         return $this->serializer->decode($csvData, 'csv');
     }
 
-    public function getCleanData(array $initialData): array
+    public function getCleanData(array $initialData): ?array
     {
         $cleanData = [];
         foreach ($initialData as $initialDatum) {
