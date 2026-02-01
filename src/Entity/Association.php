@@ -107,7 +107,13 @@ class Association
 
     public function setLatitude(float $latitude): static
     {
-        $this->latitude = $latitude;
+        // initial value
+        if ($latitude === 91.0) {
+
+            return $this;
+        }
+        $checkedLatitude = $latitude > 90 || $latitude < -90 ?  null :  $latitude;
+        $this->latitude = $checkedLatitude;
 
         return $this;
     }
@@ -119,13 +125,23 @@ class Association
 
     public function setLongitude(float $longitude): static
     {
-        $this->longitude = $longitude;
+        // initial value
+        if ($longitude === 181.0) {
+            return $this;
+        }
+        $checkedLongitude = $longitude > 180 || $longitude < -180 ?  null :  $longitude;
+        $this->longitude = $checkedLongitude;
 
         return $this;
     }
 
-    public function getCoordinates(): array
+    public function getCoordinates(): ?array
     {
+        if ($this->latitude > 90 || $this->longitude > 180 ||
+            $this->latitude < -90 || $this->longitude < -180) {
+            return null;
+        }
+
         return [$this->latitude, $this->longitude];
     }
 }

@@ -25,4 +25,34 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'bootstrap' => [
+        'version' => '5.3.8',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '5.3.8',
+        'type' => 'css',
+    ],
+    'bootstrap/dist/js/bootstrap.bundle.min.js' => [
+        'version' => '5.3.8',
+    ],
+    '@fortawesome/fontawesome-free/css/all.css' => [
+        'version' => '7.1.0',
+        'type' => 'css',
+    ],
+    'gsap' => [
+        'version' => '3.14.2',
+    ],
+    'leaflet' => [
+        'version' => '1.9.4',
+    ],
+    'leaflet/dist/leaflet.min.css' => [
+        'version' => '1.9.4',
+        'type' => 'css',
+    ],
+    '@symfony/ux-leaflet-map' => [
+        'path' => './vendor/symfony/ux-leaflet-map/assets/dist/map_controller.js',
+    ],
 ];

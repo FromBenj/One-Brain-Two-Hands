@@ -1,0 +1,25 @@
+$main-blue: #122132;
+$main-white: #fbf6ee;
+
+body {
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: $main-white;
+}
+
+
+.bg-blue {
+    background-color: $main-blue;
+}
+
+.bg-white {
+    background-color: $main-white;
+}
+
+.color-blue {
+    color: $main-blue;
+}
+
+.color-white {
+    color: $main-white;
+}

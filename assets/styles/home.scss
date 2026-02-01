@@ -1,0 +1,20 @@
+@import "main";
+
+#home-container {
+    background-color: $main-blue;
+    width: 100vw;
+    height: 100vh;
+}
+
+#home-menu {
+    height: 33%;
+}
+
+.home-menu-items {
+    border: solid thin wheat;
+    border-radius: 50px;
+}
+
+.home-appear {
+    opacity: 0;
+}

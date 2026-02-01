@@ -1511,6 +1511,46 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     generate_final_classes?: bool|Param, // Default: true
  *     generate_final_entities?: bool|Param, // Default: false
  * }
+ * @psalm-type SymfonycastsSassConfig = array{
+ *     root_sass?: list<scalar|Param|null>,
+ *     binary?: scalar|Param|null, // The Sass binary to use // Default: null
+ *     sass_options?: array{
+ *         style?: "compressed"|"expanded"|Param, // The style of the generated CSS: compressed or expanded. // Default: "expanded"
+ *         charset?: bool|Param, // Whether to include the charset declaration in the generated Sass.
+ *         error_css?: bool|Param, // Emit a CSS file when an error occurs.
+ *         source_map?: bool|Param, // Whether to generate source maps. // Default: true
+ *         embed_sources?: bool|Param, // Embed source file contents in source maps.
+ *         embed_source_map?: bool|Param, // Embed source map contents in CSS. // Default: "%kernel.debug%"
+ *         load_path?: list<scalar|Param|null>,
+ *         quiet?: bool|Param, // Don't print warnings.
+ *         quiet_deps?: bool|Param, // Don't print compiler warnings from dependencies.
+ *         stop_on_error?: bool|Param, // Don't compile more files once an error is encountered.
+ *         trace?: bool|Param, // Print full Dart stack traces for exceptions.
+ *     },
+ *     embed_sourcemap?: bool|Param|null, // Deprecated: Option "embed_sourcemap" at "symfonycasts_sass.embed_sourcemap" is deprecated. Use "sass_options.embed_source_map" instead". // Default: null
+ * }
+ * @psalm-type UxMapConfig = array{
+ *     renderer?: scalar|Param|null, // Default: null
+ *     google_maps?: array{
+ *         default_map_id?: scalar|Param|null, // Default: null
+ *     },
+ * }
+ * @psalm-type UxIconsConfig = array{
+ *     icon_dir?: scalar|Param|null, // The local directory where icons are stored. // Default: "%kernel.project_dir%/assets/icons"
+ *     default_icon_attributes?: array<string, scalar|Param|null>,
+ *     icon_sets?: array<string, array{ // the icon set prefix (e.g. "acme") // Default: []
+ *         path?: scalar|Param|null, // The local icon set directory path. (cannot be used with 'alias')
+ *         alias?: scalar|Param|null, // The remote icon set identifier. (cannot be used with 'path')
+ *         icon_attributes?: array<string, scalar|Param|null>,
+ *     }>,
+ *     aliases?: array<string, string|Param>,
+ *     iconify?: bool|array{ // Configuration for the remote icon service.
+ *         enabled?: bool|Param, // Default: true
+ *         on_demand?: bool|Param, // Whether to download icons "on demand". // Default: true
+ *         endpoint?: scalar|Param|null, // The endpoint for the Iconify icons API. // Default: "https://api.iconify.design"
+ *     },
+ *     ignore_not_found?: bool|Param, // Ignore error when an icon is not found. Set to 'true' to fail silently. // Default: false
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1524,6 +1564,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     twig_extra?: TwigExtraConfig,
  *     security?: SecurityConfig,
  *     monolog?: MonologConfig,
+ *     symfonycasts_sass?: SymfonycastsSassConfig,
+ *     ux_map?: UxMapConfig,
+ *     ux_icons?: UxIconsConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1540,6 +1583,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         maker?: MakerConfig,
+ *         symfonycasts_sass?: SymfonycastsSassConfig,
+ *         ux_map?: UxMapConfig,
+ *         ux_icons?: UxIconsConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1554,6 +1600,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
+ *         symfonycasts_sass?: SymfonycastsSassConfig,
+ *         ux_map?: UxMapConfig,
+ *         ux_icons?: UxIconsConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1569,6 +1618,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
+ *         symfonycasts_sass?: SymfonycastsSassConfig,
+ *         ux_map?: UxMapConfig,
+ *         ux_icons?: UxIconsConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

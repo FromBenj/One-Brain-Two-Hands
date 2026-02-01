@@ -1,51 +1,54 @@
-function getCurrentLocation() {
-    console.log('yes');
-    return new Promise((resolve, reject) => {
-        if (!navigator.geolocation) {
-            reject({
-                code: 'NOT_SUPPORTED',
-                message: 'Geolocation is not supported by your browser'
-            });
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const coordinates = {
-                    lat: position.coords.latitude,
-                    lon: position.coords.longitude,
-                    accuracy: position.coords.accuracy
-                };
-                resolve(coordinates);
-            },
-            (error) => {
-                reject(error);
-            },
-            {
-                enableHighAccuracy: false,
-                timeout: 10000,
-                maximumAge: 0
-            }
-        );
-    });
-}
-
-export async function fetchCoordinates() {
-    try{
-    const coordinates = await getCurrentLocation();
-    console.log('Current coordinates:', coordinates);
-    const response = await fetch('/map/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(coordinates)
-    });
-        const data = await response.json();
-        console.log(data);
-
-    } catch (error) {
-        console.error('Geolocation Error:', error.code, error.message);
+async function getCurrentPosition() {
+    if (!navigator.geolocation) {
+        console.log({
+            code: 'NOT_SUPPORTED',
+            message: 'Geolocation is not supported by your browser'
+        });
     }
+    navigator.geolocation.getCurrentPosition(
+        async (position) => {
+            const coordinates = {
+                lat: position.coords.latitude,
+                lon: position.coords.longitude,
+                accuracy: position.coords.accuracy
+            };
+            await setUserPosition(coordinates);
+        },
+        (error) => {
+            console.log(error);
+        },
+        {
+            enableHighAccuracy: true,
+            maximumAge: 30000,
+        }
+    );
 }
 
+export function enterPositionPage() {
+    const positionButton = document.getElementById('home-position-button');
+    if (!positionButton) {
+        return;
+    }
+    positionButton.addEventListener('touchstart', async (e) => {
+        e.defaultPrevented;
+        await getCurrentPosition();
+    })
+}
+
+async function setUserPosition(coordinates) {
+    const formData = new FormData();
+    formData.append('lat', coordinates.lat);
+    formData.append('lon', coordinates.lon);
+    formData.append('accuracy', coordinates.accuracy);
+
+    fetch('/map/you', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
+            window.location.href = '/map/you';
+        })
+        .catch(error => console.error('Error:', error));
+}

@@ -75,8 +75,9 @@ class MapManager
         }
         $centerPoint = new Coordinate($center);
         foreach ($associations as $association) {
-          dd('yes');
+            if ($association->getCoordinates())
             $point = new Coordinate($association->getCoordinates());
+            dd($point);
             $distance = (new Distance())->setFrom($centerPoint)->setTo($point);
             if ($distance->flat() < $radiusMeters) {
                 $filteredAsso[] = $point;

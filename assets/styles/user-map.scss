@@ -1,0 +1,13 @@
+@import './main';
+#user-map-container {
+    width: 100vw;
+    height: 35vh;
+    padding: 0.5rem 1rem;
+}
+
+#user-map {
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    border: solid $main-blue;
+}

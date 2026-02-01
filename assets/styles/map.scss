@@ -1,0 +1,17 @@
+@import "main";
+
+$map-light-blue: lightseagreen;
+$map-light-green: #00a394;
+
+
+.leaflet-interactive {
+    fill: $map-light-blue;
+    stroke: $map-light-green;
+}
+
+.leaflet-marker-icon {
+    color: #EDBE4FFF;
+    stroke: #00a394;
+    stroke-width: 0.5px;
+}
+

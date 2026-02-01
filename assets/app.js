@@ -1,9 +1,18 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
+import './app.scss';
+
 import './stimulus_bootstrap.js';
-import './styles/app.css';
+import 'bootstrap';
+import 'gsap';
 
-import {fetchCoordinates} from "./js/current-location.js";
+import {enterPositionPage} from "./js/current-location.js";
+import {homeElementsAppear} from "./js/home.js";
+document.addEventListener('DOMContentLoaded', async () => {
+    enterPositionPage();
+    homeElementsAppear();
+});
 
-await fetchCoordinates();
 
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

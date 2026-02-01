@@ -141,8 +141,8 @@ class AssociationManager
             $association->setSocialId($assoData['socialId']);
             $association->setAddress($assoData['address']);
             $association->setWebsite($assoData['website']);
-            $association->setLatitude(100);  // impossible value
-            $association->setLongitude(100);  // Impossible value
+            $association->setLatitude(91.0);  // impossible value
+            $association->setLongitude(181.0);  // Impossible value
             $this->em->persist($association);
             $i++;
             if (($i % $batchSize) === 0) {

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Associations autour de moi{% endblock %}
+
+{% block body %}
+    <div>
+        {% if user_map is not null %}
+            <div id="user-map-container">
+                {{ ux_map(user_map, {id: 'user-map'}) }}
+            </div>
+        {% else %}
+            <div class="d-flex flex-column align-items-center justify-content-center vh-100 vw-100">
+                <h4 class="text-center">Oops!</h4>
+                <h4 class="text-center">Looks like you’re on the moon...</h4>
+                <h4 class="text-center"> We’re having trouble reaching you.</h4>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
