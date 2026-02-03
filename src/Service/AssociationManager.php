@@ -41,12 +41,14 @@ class AssociationManager
         return implode("", $explodedValue);
     }
 
-    public function setDepartments(): void
+    public function setDepartments(): array
     {
         $mainDepartments = range(1, 95);
         $specialDepartments = [98, 971, 972, 974, 976];
 
         $this->departments = array_merge($mainDepartments, $specialDepartments);
+
+        return $this->departments;
     }
 
     public function getDataFromCSVPath(int $department): iterable
@@ -118,6 +120,7 @@ class AssociationManager
             if ($address === '') {
                 continue;
             }
+            $coordinates = $this->mapManager->getCoordFromAddress($address);
 
             yield [
                 'name' => $name,
@@ -125,11 +128,14 @@ class AssociationManager
                 'socialId' => $finalSocialId,
                 'address' => $address,
                 'website' => $association['siteweb'] ?? '',
+                'latitude'=> $coordinates[0] ?? null,
+                'longitude' => $coordinates[1] ?? null,
+                'department' => $department,
             ];
         }
     }
 
-    public function migrateToDatabase(int $department, int $limit): void
+    public function migrateToDatabase(int $department, ?int $limit): void
     {
         $generator = $this->getCleanData($department);
         $batchSize = 200;
@@ -141,16 +147,19 @@ class AssociationManager
             $association->setSocialId($assoData['socialId']);
             $association->setAddress($assoData['address']);
             $association->setWebsite($assoData['website']);
-            $association->setLatitude(91.0);  // impossible value
-            $association->setLongitude(181.0);  // Impossible value
+            $association->setLatitude($assoData['latitude']);
+            $association->setLongitude($assoData['longitude']);
+            $association->setDepartment($assoData['department']);
             $this->em->persist($association);
+            // To check migration
+            dump($association->getName());
             $i++;
             if (($i % $batchSize) === 0) {
                 $this->em->flush();
                 $this->em->clear();
                 gc_collect_cycles();
             }
-            if ($i === $limit) {
+            if ($limit && $i === $limit) {
                 break;
             }
         }

@@ -2,6 +2,8 @@
 
 $map-light-blue: lightseagreen;
 $map-light-green: #00a394;
+$map-orange: #EDBE4FFF;
+$map-light-orange: navajowhite;
 
 
 .leaflet-interactive {
@@ -10,8 +12,8 @@ $map-light-green: #00a394;
 }
 
 .leaflet-marker-icon {
-    color: #EDBE4FFF;
-    stroke: #00a394;
+    color: $main-blue;
+    stroke: $map-light-orange;
     stroke-width: 0.5px;
 }
 

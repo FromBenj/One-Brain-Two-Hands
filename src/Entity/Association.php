@@ -29,11 +29,14 @@ class Association
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $website = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $latitude = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $longitude = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $department = null;
 
     public function getId(): ?int
     {
@@ -105,13 +108,8 @@ class Association
         return $this->latitude;
     }
 
-    public function setLatitude(float $latitude): static
+    public function setLatitude(?float $latitude): static
     {
-        // initial value
-        if ($latitude === 91.0) {
-
-            return $this;
-        }
         $checkedLatitude = $latitude > 90 || $latitude < -90 ?  null :  $latitude;
         $this->latitude = $checkedLatitude;
 
@@ -123,12 +121,8 @@ class Association
         return $this->longitude;
     }
 
-    public function setLongitude(float $longitude): static
+    public function setLongitude(?float $longitude): static
     {
-        // initial value
-        if ($longitude === 181.0) {
-            return $this;
-        }
         $checkedLongitude = $longitude > 180 || $longitude < -180 ?  null :  $longitude;
         $this->longitude = $checkedLongitude;
 
@@ -143,5 +137,17 @@ class Association
         }
 
         return [$this->latitude, $this->longitude];
+    }
+
+    public function getDepartment(): ?int
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(?int $department): static
+    {
+        $this->department = $department;
+
+        return $this;
     }
 }

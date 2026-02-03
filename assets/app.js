@@ -6,7 +6,7 @@ import './stimulus_bootstrap.js';
 import 'bootstrap';
 import 'gsap';
 
-import {enterPositionPage} from "./js/current-location.js";
+import {enterPositionPage} from "./js/current-position.js";
 import {homeElementsAppear} from "./js/home.js";
 document.addEventListener('DOMContentLoaded', async () => {
     enterPositionPage();

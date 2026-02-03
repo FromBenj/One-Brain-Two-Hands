@@ -1,3 +1,14 @@
+export function enterPositionPage() {
+    const positionButton = document.getElementById('home-position-button');
+    if (!positionButton) {
+        return;
+    }
+    positionButton.addEventListener('touchstart', async (e) => {
+        e.defaultPrevented;
+        await getCurrentPosition();
+    })
+}
+
 async function getCurrentPosition() {
     if (!navigator.geolocation) {
         console.log({
@@ -24,17 +35,6 @@ async function getCurrentPosition() {
     );
 }
 
-export function enterPositionPage() {
-    const positionButton = document.getElementById('home-position-button');
-    if (!positionButton) {
-        return;
-    }
-    positionButton.addEventListener('touchstart', async (e) => {
-        e.defaultPrevented;
-        await getCurrentPosition();
-    })
-}
-
 async function setUserPosition(coordinates) {
     const formData = new FormData();
     formData.append('lat', coordinates.lat);
@@ -48,7 +48,7 @@ async function setUserPosition(coordinates) {
         .then(response => response.json())
         .then(result => {
             console.log(result);
-            window.location.href = '/map/you';
+            window.location.href = result.redirect;
         })
         .catch(error => console.error('Error:', error));
 }

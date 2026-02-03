@@ -3,8 +3,6 @@
 namespace App\Service;
 
 use AllowDynamicProperties;
-use App\Repository\AssociationRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use League\Geotools\Distance\Distance;
 use League\Geotools\Coordinate\Coordinate;
@@ -14,10 +12,7 @@ class MapManager
 {
     private const ENDPOINT = 'https://nominatim.openstreetmap.org/search';
 
-    public function __construct(
-        private readonly HttpClientInterface    $httpClient,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly AssociationRepository  $associationRepository)
+    public function __construct(private readonly HttpClientInterface $httpClient)
     {
     }
 
@@ -40,31 +35,10 @@ class MapManager
         $features = $data['features'];
         if (!empty($features)) {
 
-            return $features[array_key_first($features)]['geometry']['coordinates'];
+            return array_reverse($features[array_key_first($features)]['geometry']['coordinates']);
         }
 
         return null;
-    }
-
-    public function migrateCoordToDatabase(int $limit): void
-    {
-        $associations = $this->associationRepository->findEmptyCoordinates($limit);
-        if (!empty($associations)) {
-            foreach ($associations as $association) {
-                $address = $association->getAddress();
-                $coordinates = $this->getCoordFromAddress($address);
-                if ($coordinates) {
-                    $association->setLatitude($coordinates[0]);
-                    $association->setLongitude($coordinates[1]);
-                    $this->entityManager->persist($association);
-                } else {
-                    continue;
-                }
-                sleep(1);
-            }
-            $this->entityManager->flush();
-            $this->entityManager->clear();
-        }
     }
 
     public function findByCircle(array $associations, array $center, int $radiusMeters): ?array
@@ -75,15 +49,14 @@ class MapManager
         }
         $centerPoint = new Coordinate($center);
         foreach ($associations as $association) {
-            if ($association->getCoordinates())
-            $point = new Coordinate($association->getCoordinates());
-            dd($point);
-            $distance = (new Distance())->setFrom($centerPoint)->setTo($point);
-            if ($distance->flat() < $radiusMeters) {
-                $filteredAsso[] = $point;
+            if ($association->getCoordinates()) {
+                $point = new Coordinate($association->getCoordinates());
+                $distance = (new Distance())->setFrom($centerPoint)->setTo($point)->flat();
+                if ($distance <= $radiusMeters) {
+                    $filteredAsso[] = $point;
+                }
             }
         }
-
         return $filteredAsso;
     }
 }

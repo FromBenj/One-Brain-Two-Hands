@@ -7,6 +7,7 @@ use App\Repository\AssociationRepository;
 use App\Service\AssociationManager;
 use App\Service\MapManager;
 use App\Service\NomenclatureManager;
+use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,7 @@ final class MapController extends AbstractController
     public function __construct(NomenclatureManager   $nomenclatureManager,
                                 AssociationManager    $associationManager,
                                 MapManager            $mapManager,
+                                UserManager           $userManager,
                                 AssociationRepository $associationRepository
     )
     {
@@ -33,6 +35,7 @@ final class MapController extends AbstractController
         $this->associationsManager = $associationManager;
         $this->mapManager = $mapManager;
         $this->associationRepository = $associationRepository;
+        $this->userManager = $userManager;
     }
 
     #[Route('/you', name: 'user_position', methods: ['GET', 'POST'])]
@@ -49,30 +52,57 @@ final class MapController extends AbstractController
                 'accuracy' => $accuracy,
             ];
             $session->set('user_position', $userPosition);
-
-            return $this->json(['success' => true, 'lat' => $lat, 'lon' => $lon, 'accuracy' => $accuracy]);
+            return $this->json(['success' => true,
+                'lat' => $lat,
+                'lon' => $lon,
+                'accuracy' => $accuracy,
+                'redirect' => $this->generateUrl('map_user_position'),
+            ]);
         }
         $userMap = null;
+        $radiusMeters = 3000;
         if ($session->get('user_position') !== null) {
-            $userPosition = $session->get('position');
-            $userLat = $userPosition['lat'];
-            $userLon = $userPosition['lon'];
-            $icon = Icon::ux('streamline-flex:pin-1-solid');
+            $userLat = $session->get('user_position')['lat'];
+            $userLon = $session->get('user_position')['lon'];
+            $userIcon = Icon::ux('streamline-flex:pin-1-solid');
+            $assoIcon = Icon::ux('basil:pin-solid');
+            $department = $this->userManager->getUserDepartment(['lat' => $userLat, 'lon' => $userLon]);
+            $associations = $this->associationRepository->findBy( ['department' => $department]);
             $userMap = (new Map())
                 ->center(new Point($userLat, $userLon))
                 ->zoom(12)
                 ->addMarker(
                     new Marker(
                         position: new Point($userLat, $userLon),
-                        icon: $icon
+                        infoWindow: new InfoWindow(
+                            headerContent: '<b>Here you are</b>',
+                            content: 'Your info content here',
+                        ),
+                        icon: $userIcon,
                     )
                 );
+            foreach ($associations as $association) {
+                $lat = $association->getLatitude();
+                $lon = $association->getLongitude();
+                $activitySentence = 'Activitée : ' . $association->getActivity();
+                $activitySentenceEnd = strlen($activitySentence) > 100 ? '...' : '';
+                if ($lat >= -90 && $lat <= 90 && $lon >= -180 && $lon <= 180) {
+                    $userMap->addMarker(new Marker(
+                        position: new Point($lat, $lon),
+                        infoWindow: new InfoWindow(
+                            headerContent: '<b>' . $association->getName() . '</b>',
+                            content: mb_substr($activitySentence, 0, 100) . $activitySentenceEnd,
+                        ),
+                        icon: $assoIcon,
+                    ));
+                }
+            }
 
             $userMap->addCircle(new Circle(
                 center: new Point($userLat, $userLon),
-                radius: 2_000,
+                radius: $radiusMeters,
                 infoWindow: new InfoWindow(
-                    content: 'All associations within 2 km of you',
+                    content: 'All associations within 3 km of you',
                 ),
             ));
         }
