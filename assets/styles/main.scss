@@ -23,3 +23,39 @@ body {
 .color-white {
     color: $main-white;
 }
+
+.loader {
+    width: min(50vw, 50vh);
+    height: min(50vw, 50vh);
+    display: inline-block;
+    position: relative;
+
+    &::after,
+    &::before {
+        content: '';
+        box-sizing: border-box;
+        width: min(50vw, 50vh);
+        height: min(50vw, 50vh);
+        border-radius: 50%;
+        background: $main-white;
+        position: absolute;
+        left: 0;
+        top: 0;
+        animation: loader-animation 2s linear infinite;
+    }
+
+    &::after {
+        animation-delay: -1s;
+    }
+}
+
+@keyframes loader-animation {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}

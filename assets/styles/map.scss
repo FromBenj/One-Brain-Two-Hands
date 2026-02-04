@@ -1,19 +1,19 @@
 @import "main";
 
 $map-light-blue: lightseagreen;
-$map-light-green: #00a394;
-$map-orange: #EDBE4FFF;
+$map-green: #16433f;
+$map-light-green: #18843c;
 $map-light-orange: navajowhite;
 
 
-.leaflet-interactive {
-    fill: $map-light-blue;
-    stroke: $map-light-green;
-}
+//.leaflet-interactive {
+//    fill: $map-light-blue;
+//    stroke: $map-green;
+//}
 
-.leaflet-marker-icon {
-    color: $main-blue;
-    stroke: $map-light-orange;
-    stroke-width: 0.5px;
-}
+//.leaflet-marker-icon {
+//    color: $main-blue;
+//    stroke: $map-light-orange;
+//    stroke-width: 0.5px;
+//}
 

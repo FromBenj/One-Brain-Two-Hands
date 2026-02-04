@@ -2,6 +2,10 @@
 notes.md
 ###> perso ###
 
+###< data ###
+src/data/*
+###> data ###
+
 ###< PhpStorm ###
 .idea
 ###> PhpStorm ###

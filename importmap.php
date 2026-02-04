@@ -55,4 +55,11 @@ return [
     '@symfony/ux-leaflet-map' => [
         'path' => './vendor/symfony/ux-leaflet-map/assets/dist/map_controller.js',
     ],
+    'leaflet.sidepanel' => [
+        'version' => '1.2.3',
+    ],
+    'leaflet.sidepanel/dist/leaflet.sidepanel.min.css' => [
+        'version' => '1.2.3',
+        'type' => 'css',
+    ],
 ];

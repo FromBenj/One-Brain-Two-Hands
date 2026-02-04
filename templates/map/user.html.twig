@@ -3,11 +3,13 @@
 {% block title %}Associations autour de moi{% endblock %}
 
 {% block body %}
-    <div>
+    {% include 'components/loader.html.twig' %}
+    {% include 'components/side-panel.html.twig' %}
+    <div class="position-relative z-0">
         {% if user_map is not null %}
             <div id="user-map-container">
                 {{ ux_map(user_map, {id: 'user-map'}) }}
-                <p class="text-end m-0 p-2 fw-bold">Find me</p>
+                <p id="find-me-btn" class="text-end m-0 p-2 fw-bold">Find me</p>
             </div>
         {% else %}
             <div class="d-flex flex-column align-items-center justify-content-center vh-100 vw-100">

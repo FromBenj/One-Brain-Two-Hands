@@ -11,6 +11,7 @@ use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\UX\Map\Circle;
 use Symfony\UX\Map\Icon\Icon;
@@ -28,7 +29,8 @@ final class MapController extends AbstractController
                                 AssociationManager    $associationManager,
                                 MapManager            $mapManager,
                                 UserManager           $userManager,
-                                AssociationRepository $associationRepository
+                                AssociationRepository $associationRepository,
+                                KernelInterface       $kernel,
     )
     {
         $this->nomenclatureManager = $nomenclatureManager;
@@ -36,6 +38,8 @@ final class MapController extends AbstractController
         $this->mapManager = $mapManager;
         $this->associationRepository = $associationRepository;
         $this->userManager = $userManager;
+        $this->kernel = $kernel;
+
     }
 
     #[Route('/you', name: 'user_position', methods: ['GET', 'POST'])]
@@ -64,10 +68,14 @@ final class MapController extends AbstractController
         if ($session->get('user_position') !== null) {
             $userLat = $session->get('user_position')['lat'];
             $userLon = $session->get('user_position')['lon'];
-            $userIcon = Icon::ux('streamline-flex:pin-1-solid');
-            $assoIcon = Icon::ux('basil:pin-solid');
+            $userIconPath = $this->kernel->getProjectDir() . '/assets/icons/map-user-icon.svg';
+            $userIconContent = file_get_contents($userIconPath);
+            $userIcon = Icon::svg($userIconContent);
+            $assoIconPath = $this->kernel->getProjectDir() . '/assets/icons/map-asso-icon.svg';
+            $assoIconContent = file_get_contents($assoIconPath);
+            $assoIcon = Icon::svg($assoIconContent);
             $department = $this->userManager->getUserDepartment(['lat' => $userLat, 'lon' => $userLon]);
-            $associations = $this->associationRepository->findBy( ['department' => $department]);
+            $associations = $this->associationRepository->findBy(['department' => $department]);
             $userMap = (new Map())
                 ->center(new Point($userLat, $userLon))
                 ->zoom(12)
@@ -76,7 +84,6 @@ final class MapController extends AbstractController
                         position: new Point($userLat, $userLon),
                         infoWindow: new InfoWindow(
                             headerContent: '<b>Here you are</b>',
-                            content: 'Your info content here',
                         ),
                         icon: $userIcon,
                     )

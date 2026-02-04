@@ -4,6 +4,7 @@ namespace App\Service;
 
 use AllowDynamicProperties;
 use App\Entity\Association;
+use App\Repository\AssociationRepository;
 use League\Csv\Reader;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,12 +17,14 @@ class AssociationManager
     private array $departments = [];
 
     public function __construct(SerializerInterface $serializer, EntityManagerInterface $em,
-                                CategoryRepository  $categoryRepository, MapManager $mapManager, string $projectDir)
+                                CategoryRepository  $categoryRepository, AssociationRepository $associationRepository,
+                                MapManager          $mapManager, string $projectDir)
     {
         $this->projectDir = $projectDir;
         $this->serializer = $serializer;
         $this->em = $em;
         $this->categoryRepository = $categoryRepository;
+        $this->associationRepository = $associationRepository;
         $this->mapManager = $mapManager;
         $this->setDepartments();
     }
@@ -128,7 +131,7 @@ class AssociationManager
                 'socialId' => $finalSocialId,
                 'address' => $address,
                 'website' => $association['siteweb'] ?? '',
-                'latitude'=> $coordinates[0] ?? null,
+                'latitude' => $coordinates[0] ?? null,
                 'longitude' => $coordinates[1] ?? null,
                 'department' => $department,
             ];
@@ -141,6 +144,16 @@ class AssociationManager
         $batchSize = 200;
         $i = 0;
         foreach ($generator as $assoData) {
+            $alreadyExists = $this->associationRepository->findOneBy([
+                    'department' => $assoData['department'],
+                    'name' => $assoData['name'],
+                    'latitude' => $assoData['latitude'],
+                    'longitude' => $assoData['longitude'],
+                ]
+            );
+            if ($alreadyExists) {
+                continue;
+            }
             $association = new Association();
             $association->setName($assoData['name']);
             $association->setActivity($assoData['activity']);

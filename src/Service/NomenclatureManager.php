@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[AllowDynamicProperties]
 class NomenclatureManager
 {
-    public const string FILE_NAME = "custom-nomenclature-waldec-0126.csv";
+    public const  FILE_NAME = "custom-nomenclature-waldec-0126.csv";
     public function __construct(SerializerInterface $serializer, EntityManagerInterface $em, string $projectDir)
     {
         $this->serializer = $serializer;
