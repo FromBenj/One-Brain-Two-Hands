@@ -1,8 +1,7 @@
 # One Brain Two Hands
 ___
-
 #### _Another small and probably useless project that makes me learn new stuff_
-#### _[in progress...]_
+##### _[Still in progress...]_
 
 ### What it is
 ___
@@ -24,7 +23,7 @@ ___
 - Custom Symfony **commands**
 - **LocalStorage** and **sessionStorage** to save information without new Entities
 
-### Technologies
+### Familiar Technologies
 ___
 - PHP 8.2
 - Symfony 7.4
@@ -35,10 +34,20 @@ ___
 - Bootstrap
 - Font Awesome
 
-### License
+### Data
 ___
-MIT
+You can find all the data used for this project in the 2 Releases:
+- **'Associations Data'** --> Full list of the associations in France
+- **'Waldec Nomenclature'** --> List of the association categories
+
+
+[//]: # (### Launch the app)
+[//]: # (___)
 
 [//]: # (https://github.com/FromBenj/One-Brain-Two-Hands/releases/tag/dataset-initialisation)
 
 [//]: # (https://github.com/FromBenj/One-Brain-Two-Hands/releases/tag/associations-nomenclature)
+
+### License
+___
+MIT
